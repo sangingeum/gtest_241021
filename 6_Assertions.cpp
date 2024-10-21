@@ -105,3 +105,30 @@ TEST(SampleTest3, Sample1)
     EXPECT_DOUBLE_EQ(a, b);
     EXPECT_NEAR(a, b, 0.0000000001);
 }
+
+// * 테스트 커버리지
+// : 테스트 코드에 의해서 실해되는 제품 코드의 비율
+void OpenFile(const std::string& filename)
+{
+    if (filename.empty()) {
+        // throw std::invalid_argument("Invalid filename");
+        throw 1;
+    }
+
+    // ...
+}
+
+TEST(SampleTest4, OpenFile)
+{
+    std::string emptyFilename = "";
+
+    try {
+        OpenFile(emptyFilename);
+        FAIL() << "예외가 발생하지 않았음";
+    } catch (std::invalid_argument& e) {
+        // 기대한 예외가 발생함
+        SUCCEED();
+    } catch (...) {
+        FAIL() << "다른 예외가 발생함";
+    }
+}
