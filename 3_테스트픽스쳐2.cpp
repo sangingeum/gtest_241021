@@ -62,12 +62,16 @@ TEST_F(CalcTest, PressMinus)
     ASSERT_EQ(calc->Display(), 5) << "10 - 5를 하였을 때";
 }
 
-#if 0
 //          testing::Test
 //                 |
 //     --------------------------
 //     |                         |
 // CalcTest_PressPlus_Test   CalcTest_PressMinus_Test
+
+//  class CalcTest_PressPlus_Test : public ::testing::Test
+
+#if 0
+
 
 //  class CalcTest_PressPlus_Test : public ::testing::Test
 TEST(CalcTest, PressPlus)
