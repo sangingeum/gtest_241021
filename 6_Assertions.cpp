@@ -48,3 +48,23 @@ TEST(SampleTest, Sample1)
 }
 #endif
 #endif
+
+class User {
+    std::string name = "Tom";
+
+public:
+    std::string GetName() const { return name; }
+};
+
+// User* GetUser() { return new User; }
+User* GetUser() { return nullptr; }
+
+TEST(UserTest, GetName)
+{
+    User* user = GetUser();
+
+    // ...
+
+    ASSERT_NE(user, nullptr); // 왜 ASSERT로 작성되어야 하는지 여부를 이해해야 합니다.
+    EXPECT_EQ(user->GetName(), "Tom");
+}
