@@ -68,3 +68,25 @@ TEST(UserTest, GetName)
     ASSERT_NE(user, nullptr); // 왜 ASSERT로 작성되어야 하는지 여부를 이해해야 합니다.
     EXPECT_EQ(user->GetName(), "Tom");
 }
+
+// 3. C 문자열 비교 단언문
+// C 문자열: '\0'문자로 종료되는 char 배열
+//  - EXPECT_STREQ/STRNE
+//  - EXPECT_STRCASEEQ/STRCASENE ; 대소문자 무시
+
+TEST(SampleTest2, Sample1)
+{
+    std::string s1 = "hello";
+    std::string s2 = "hello";
+
+    // ...
+    EXPECT_EQ(s1, s2);
+
+    const char* s3 = "hello";
+    const char* s4 = s1.c_str();
+
+    // EXPECT_EQ(s3, s4);
+    EXPECT_STREQ(s3, s4);
+    const char* s5 = "HELLO";
+    EXPECT_STRCASEEQ(s3, s5);
+}
