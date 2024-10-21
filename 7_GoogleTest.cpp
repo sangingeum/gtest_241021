@@ -7,10 +7,16 @@
 // => 테스트를 비활성화하기 위해서, 주석처리하면, "잊혀진 테스트"가 됩니다.
 
 // => Google Test 에서는 테스트 스위트 이름 또는 테스트 케이스의 이름이
-//    DISABLED_ 접두를 가지는 경우, 비활성화됩니다.
+//    DISABLED_ 접두를 가지는 경우, 비활성화됩니다
+// => 비활성화된 테스트를 수행할 수 있는 옵션이 존재합니다.
+//  $ ./a.out --gtest_also_run_disabled_tests
 
-// TEST(ImageProcessorTest, DISABLED_ResizeImage)
-TEST(DISABLED_ImageProcessorTest, ResizeImage)
+TEST(ImageProcessorTest, DISABLED_ResizeImage)
 {
     FAIL() << "작성 중입니다.";
 }
+
+class DISABLED_SampleTest : public testing::Test { };
+TEST_F(DISABLED_SampleTest, foo) { }
+TEST_F(DISABLED_SampleTest, goo) { }
+TEST_F(DISABLED_SampleTest, hoo) { }
