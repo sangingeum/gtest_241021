@@ -20,3 +20,19 @@ class DISABLED_SampleTest : public testing::Test { };
 TEST_F(DISABLED_SampleTest, foo) { }
 TEST_F(DISABLED_SampleTest, goo) { }
 TEST_F(DISABLED_SampleTest, hoo) { }
+
+// 2. 테스트 필터
+// => 원하는 테스트를 선택적으로 수행할 수 있습니다.
+
+// $ ./a.out --gtest_filter=ImageProcessorTest.foo
+
+// - 여러개의 테스트 케이스를 :을 통해 나열할 수 있습니다.
+// $ ./a.out --gtest_filter=ImageProcessorTest.foo:ImageTest.goo
+
+TEST(ImageTest, foo) { }
+TEST(ImageTest, goo) { }
+TEST(ImageTest, hoo) { }
+
+TEST(ImageProcessorTest, foo) { }
+TEST(ImageProcessorTest, goo) { }
+TEST(ImageProcessorTest, hoo) { }
