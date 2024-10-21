@@ -84,5 +84,5 @@ TEST(SampleTest, foo)
 // 4. 테스트 결과 포맷터(Test Result Formatter)
 // => 테스트의 결과를 XML 형식으로 export 할 수 있습니다. - xUnit Test Framework
 //  $ ./a.out --gtest_output=xml
-// => 테스트의 결과를 JSON 형식으로 export 할 수 있습니다. - Google Test
+// => 테스트의 결과를 JSON 형식으로 export 할 수 있습니다. - Google Test(1.10 이후)
 //  $ ./a.out --gtest_output=json
