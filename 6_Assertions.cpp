@@ -111,8 +111,8 @@ TEST(SampleTest3, Sample1)
 void OpenFile(const std::string& filename)
 {
     if (filename.empty()) {
-        // throw std::invalid_argument("Invalid filename");
-        throw 1;
+        throw std::invalid_argument("Invalid filename");
+        // throw 1;
     }
 
     // ...
@@ -131,4 +131,16 @@ TEST(SampleTest4, OpenFile)
     } catch (...) {
         FAIL() << "다른 예외가 발생함";
     }
+}
+
+// 5. 예외 검증 단언문
+// - EXPECT_THROW: 기대한 예외가 발생하는지 여부를 검증합니다.
+// - EXPECT_ANY_THROW: 예외 발생하는지 여부를 검증합니다.
+// - EXPECT_NO_THROW: 예외가 발생하지 않음을 검증합니다.
+TEST(SampleTest5, OpenFile)
+{
+    std::string emptyFilename = "";
+
+    EXPECT_THROW(OpenFile(emptyFilename), std::invalid_argument)
+        << "빈 파일명을 전달하였을 때";
 }
