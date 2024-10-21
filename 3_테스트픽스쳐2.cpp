@@ -29,14 +29,20 @@ public:
 //     |                         |
 // CalcTest_PressPlus_Test   CalcTest_PressMinus_Test
 
-class CalcTest : public testing::Test { };
+// - 명시적인 테스트 스위트 클래스
+class CalcTest : public testing::Test {
+protected:
+    Calc* CreateCalc() { return new Calc; }
+};
+
+// - 테스트 케이스를 만들 때, TEST_F를 이용해야 합니다.
 
 // class CalcTest_PressPlus_Test : public CalcTest
 TEST_F(CalcTest, PressPlus)
 {
     SPEC("2 더하기 2를 하였을 때, 4의 결과가 나오는지 여부를 검증합니다.");
     // Arrange
-    Calc* calc = new Calc;
+    Calc* calc = CreateCalc();
 
     // Act
     calc->Enter(2);
@@ -52,7 +58,7 @@ TEST_F(CalcTest, PressPlus)
 // class CalcTest_PressMinus_Test : public CalcTest
 TEST_F(CalcTest, PressMinus)
 {
-    Calc* calc = new Calc;
+    Calc* calc = CreateCalc();
 
     calc->Enter(10);
     calc->PressMinus();
