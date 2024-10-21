@@ -16,6 +16,10 @@ public:
 
 #define SPEC(msg) printf("[SPEC] %s\n", msg)
 
+// 2. Test Fixture를 설치하는 방법
+//  2) Delegate Set up(위임 설치)
+// > 픽스쳐 설치에 관한 코드를 별도의 테스트 유틸리티 함수를 통해 캡슐화합니다.
+
 TEST(CalcTest, PressPlus_TwoPlusTwo_DisplaysFour)
 {
     SPEC("2 더하기 2를 하였을 때, 4의 결과가 나오는지 여부를 검증합니다.");
