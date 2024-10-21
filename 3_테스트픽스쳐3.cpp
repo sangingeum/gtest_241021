@@ -26,6 +26,13 @@ public:
 //  * 단점: 픽스쳐 설치의 과정이 테스트 케이스 외부에 존재하기 때문에
 //         테스트케이스 만으로 인과관계를 분석하기 어려울 수 있습니다.
 
+// 3. xUnit Test Framework에서 테스트를 구성하는 방법
+// => 4단계 테스트 패턴(Four Phase Test Pattern)
+// 1단계: 테스트 픽스쳐를 설치하거나, 결과를 관찰하기 위해 필요한 것을 설정합니다. => SetUp()
+// 2단계: SUT와 상호 작용합니다. => TestCase
+// 3단계: 기대 결과를 확인합니다. => TeatCase
+// 4단계: 테스트 픽스쳐를 해체해서, 테스트 시작 이전의 상태로 돌려 놓습니다. => TearDown()
+
 class CalcTest : public testing::Test {
 protected:
     Calc* calc;
