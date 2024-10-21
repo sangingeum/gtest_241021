@@ -29,6 +29,15 @@ public:
 
 // 2) 설치방법 2가지
 //  => main 함수를 직접 정의할 때
+int main(int argc, char** argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    testing::AddGlobalTestEnvironment(new MyEnvironment);
+
+    return RUN_ALL_TESTS();
+}
+
 //  => main 함수를 라이브러리에 포함시켰을 때
 //   : 전역 변수의 초기화가 main 함수 이전에 수행되는 특징을 이용합니다.
-testing::Environment* my_env = testing::AddGlobalTestEnvironment(new MyEnvironment);
+// testing::Environment* my_env = testing::AddGlobalTestEnvironment(new MyEnvironment);
