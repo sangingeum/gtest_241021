@@ -20,7 +20,14 @@ public:
 //  2) Delegate Set up(위임 설치)
 // > 픽스쳐 설치에 관한 코드를 별도의 테스트 유틸리티 함수를 통해 캡슐화합니다.
 
-TEST(CalcTest, PressPlus_TwoPlusTwo_DisplaysFour)
+//          testing::Test
+//                 |
+//     --------------------------
+//     |                         |
+// CalcTest_PressPlus_Test   CalcTest_PressMinus_Test
+
+//  class CalcTest_PressPlus_Test : public ::testing::Test
+TEST(CalcTest, PressPlus)
 {
     SPEC("2 더하기 2를 하였을 때, 4의 결과가 나오는지 여부를 검증합니다.");
     // Arrange
@@ -37,6 +44,7 @@ TEST(CalcTest, PressPlus_TwoPlusTwo_DisplaysFour)
     ASSERT_EQ(calc->Display(), 4) << "2 + 2 하였을 때";
 }
 
+// class CalcTest_PressMinus_Test : public ::testing::Test
 TEST(CalcTest, PressMinus)
 {
     Calc* calc = new Calc;
