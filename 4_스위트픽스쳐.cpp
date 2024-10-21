@@ -17,6 +17,8 @@ public:
 //----
 #include <gtest/gtest.h>
 
+// 아래 코드를 암묵적 설치/해체의 코드로 변경해보세요.
+
 TEST(TerminalTest, LogIn)
 {
     Terminal* ts = new Terminal;
