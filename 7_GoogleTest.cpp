@@ -23,6 +23,10 @@ TEST_F(DISABLED_SampleTest, hoo) { }
 
 // 2. 테스트 필터
 // => 원하는 테스트를 선택적으로 수행할 수 있습니다.
+// => 테스트의 이름을 잘 구성하는 것이 좋습니다.
+//    예) 테스트의 성격에 따라 다른 접두를 사용하자.
+//       PA_
+//       PB_
 
 // $ ./a.out --gtest_filter=ImageProcessorTest.foo
 
@@ -42,3 +46,19 @@ TEST(ImageTest, hoo) { }
 TEST(ImageProcessorTest, foo) { }
 TEST(ImageProcessorTest, goo) { }
 TEST(ImageProcessorTest, hoo) { }
+
+// 3. 반복 / 무작위
+// => 모든 테스트는 몇 번을 수행하든, 순서에 상관없이 항당 동일한 결과가 나와야 합니다.
+//  "신뢰성"
+
+// $ ./a.out --gtest_repeat=10 --gtest_shuffle --gtest_break_on_failure
+//  : --gtest_break_on_failure
+//  테스트가 실패하면, 테스트 프로그램을 강제적으로 종료합니다.
+
+int n = 0;
+TEST(SampleTest, foo)
+{
+    if (n++ == 5) {
+        FAIL();
+    }
+}
