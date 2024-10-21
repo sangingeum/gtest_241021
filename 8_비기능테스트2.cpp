@@ -25,7 +25,6 @@ public:
         return malloc(size);
     }
 
-    void operator delete(void* p, size_t)
     {
         free(p);
         --allocCount;
