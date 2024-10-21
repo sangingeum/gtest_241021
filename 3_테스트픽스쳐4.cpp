@@ -33,6 +33,7 @@ TEST_F(ImageProcessorTest, BlurImage) { }
 // : 각 테스트 케이스마다 새로운 픽스쳐 객체를 생성하고 파괴하는 형태로 테스트 케이스가 수행됩니다.
 //  - 픽스쳐의 상태가 이전의 테스트로 인해 망가지더라도, 영향을 받지 않습니다.
 
+// => 스위트 픽스쳐 설치
 // ImageProcessorTest 객체 생성
 //   .SetUp()
 //    테스트 수행(ResizeImage)
@@ -44,3 +45,4 @@ TEST_F(ImageProcessorTest, BlurImage) { }
 //    테스트 수행(BlurImage)
 //   .TearDown()
 // ImageProcessorTest 객체 파괴
+// => 스위트 픽스쳐 해체
