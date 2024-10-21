@@ -16,6 +16,7 @@ public:
         std::cout << "Draw Image : " << url << std::endl;
     }
 
+#ifdef GTEST_LEAK_TEST
     static int allocCount;
 
     void* operator new(size_t size)
@@ -29,9 +30,12 @@ public:
         free(p);
         --allocCount;
     }
+#endif
 };
 
+#ifdef GTEST_LEAK_TEST
 int Image::allocCount = 0;
+#endif
 
 bool DrawImage(const std::string& url)
 {
@@ -50,6 +54,8 @@ bool DrawImage(const std::string& url)
 //  * SUT의 클래스에 메모리 관련 함수를 재정의합니다.
 //    operator new
 //    operator delete
+
+#if 0
 TEST(ImageTest, DrawImage)
 {
     int allocCount = Image::allocCount;
@@ -57,4 +63,30 @@ TEST(ImageTest, DrawImage)
     int diff = Image::allocCount - allocCount;
 
     EXPECT_EQ(diff, 0) << "memory leaks: " << diff << " object(s) leak!";
+}
+#endif
+
+class ImageTest : public testing::Test {
+protected:
+    int allocCount = 0;
+    void SetUp() override
+    {
+#ifdef GTEST_LEAK_TEST
+        allocCount = Image::allocCount;
+#endif
+    }
+
+    void TearDown() override
+    {
+#ifdef GTEST_LEAK_TEST
+        int diff = Image::allocCount - allocCount;
+        EXPECT_EQ(diff, 0) << "memory leaks: " << diff << " object(s) leak!";
+#endif
+    }
+};
+
+TEST_F(ImageTest, DrawImage)
+{
+    bool result = DrawImage("https://a.com/a.jpeg");
+    EXPECT_TRUE(result);
 }
