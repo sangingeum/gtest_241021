@@ -73,7 +73,6 @@ TEST(UserTest, GetName)
 // C 문자열: '\0'문자로 종료되는 char 배열
 //  - EXPECT_STREQ/STRNE
 //  - EXPECT_STRCASEEQ/STRCASENE ; 대소문자 무시
-
 TEST(SampleTest2, Sample1)
 {
     std::string s1 = "hello";
@@ -89,4 +88,20 @@ TEST(SampleTest2, Sample1)
     EXPECT_STREQ(s3, s4);
     const char* s5 = "HELLO";
     EXPECT_STRCASEEQ(s3, s5);
+}
+
+// 4. 부동 소수점 타입 비교 단언문
+// - EXPECT_FLOAT_EQ/NE
+// - EXPECT_DOUBLE_EQ/NE
+
+// - 오차 범위를 직접 정의하고 싶은 경우
+//  : EXPECT_NEAR
+TEST(SampleTest3, Sample1)
+{
+    double a = 0.7;
+    double b = 0.1 * 7;
+
+    // EXPECT_EQ(a, b);
+    EXPECT_DOUBLE_EQ(a, b);
+    EXPECT_NEAR(a, b, 0.0000000001);
 }
