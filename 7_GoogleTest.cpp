@@ -29,6 +29,12 @@ TEST_F(DISABLED_SampleTest, hoo) { }
 // - 여러개의 테스트 케이스를 :을 통해 나열할 수 있습니다.
 // $ ./a.out --gtest_filter=ImageProcessorTest.foo:ImageTest.goo
 
+// - 와일드 카드(*)를 지원합니다.
+// $ ./a.out --gtest_filter=*.foo
+// $ ./a.out --gtest_filter=Image*.foo
+
+// $ ./a.out --gtest_filter=Image*.foo:-ImageProcessorTest.foo
+
 TEST(ImageTest, foo) { }
 TEST(ImageTest, goo) { }
 TEST(ImageTest, hoo) { }
