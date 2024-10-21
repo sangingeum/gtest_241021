@@ -62,3 +62,27 @@ TEST(SampleTest, foo)
         FAIL();
     }
 }
+
+// Google Test(1.10 이전)
+// - Test Case
+//  - Test
+//  - Test
+//  - Test
+
+// Google Test(1.10 이후)
+// - Test Suite
+//  - Test
+//  - Test
+//  - Test
+
+// xUnit Test Framework
+// - Test Suite
+//   - Test Case
+//   - Test Case
+//   - Test Case
+
+// 4. 테스트 결과 포맷터(Test Result Formatter)
+// => 테스트의 결과를 XML 형식으로 export 할 수 있습니다. - xUnit Test Framework
+//  $ ./a.out --gtest_output=xml
+// => 테스트의 결과를 JSON 형식으로 export 할 수 있습니다. - Google Test
+//  $ ./a.out --gtest_output=json
