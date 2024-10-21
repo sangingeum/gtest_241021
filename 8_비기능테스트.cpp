@@ -23,18 +23,20 @@ void Connect(const std::string& host)
         EXPECT_LE(duration, limit) << "Timeout: " << limit << " second(s) 초과"; \
     } while (0)
 
+// 아래 매크로 함수의 형태는 GNU 컴파일러에서만 지원합니다.
 #define ASSERT_TIMEOUT(fn, limit)                                                \
-    do {                                                                         \
+    ({                                                                           \
         time_t startTime = time(nullptr);                                        \
         fn;                                                                      \
         time_t duration = time(nullptr) - startTime;                             \
         ASSERT_LE(duration, limit) << "Timeout: " << limit << " second(s) 초과"; \
-    } while (0)
+    })
 
 TEST(ConnecTest, Connect2)
 {
     time_t limit = 1;
     EXPECT_TIMEOUT(Connect("https://server.com"), limit);
+    ASSERT_TIMEOUT(Connect("https://server.com"), limit);
 }
 
 // 문제점
