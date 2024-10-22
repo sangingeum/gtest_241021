@@ -87,10 +87,16 @@ TEST(SchedulerTest, Alarm_10_00)
     EXPECT_EQ(sc.Alarm(), 100) << "10:00 일 때";
 }
 
+// * 의존성 주입
+//  : 제품 코드를 사용하듯이, 테스트 대역을 적용할 수 있습니다.
 #if 0
 int main()
 {
+    // std::cout << clock.GetCurrentTime() << std::endl;
+
     Clock clock;
-    std::cout << clock.GetCurrentTime() << std::endl;
+    Scheduler sc { &clock };
+
+    std::cout << sc.Alarm() << std::endl;
 }
 #endif
