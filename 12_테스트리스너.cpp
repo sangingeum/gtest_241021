@@ -102,7 +102,7 @@ int main(int argc, char** argv)
     testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
 
     // 2. 리스너를 등록합니다.
-    // listeners.Append(new TestListener);
+    listeners.Append(new TestListener);
     listeners.Append(new TersePrinter);
 
     // 기본 출력 프린터를 제거할 수 있습니다.
