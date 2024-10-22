@@ -67,3 +67,5 @@ TEST(CarTest, Go)
 
     EXPECT_TRUE(engine.IsStart()) << "자동차가 Go 하였을 때";
 }
+
+// * 가상함수는 일반함수보다 테스트가 용이합니다.
