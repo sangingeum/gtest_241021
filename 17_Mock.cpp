@@ -108,3 +108,10 @@ TEST(DLoggerTest, Write)
 // => 관찰할 수 있는 SUT의 상태가 존재하지 않습니다.
 //    협력 객체를 대상으로 호출되는 메소드의 호출 여부/횟수/순서/인자 등을 통해 정상 동작 여부를 검증합니다.
 //   "행위 기반 검증 / 동작 검증"
+
+// ------
+// TDD(Test Driven Development) - Kent Back
+// BDD(Behavior Driven Development, 행위 주도 개발)
+//  * 가독성(자연어)
+//    Given/When/Then
+//  * 행위 기반 검증
