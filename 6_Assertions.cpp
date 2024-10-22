@@ -39,7 +39,7 @@ TEST(SampleTest, Sample1_goo)
     ASSERT_EQ(goo(), 100);
 }
 
-#if 0
+#if 1
 TEST(SampleTest, Sample1)
 {
     // ...
@@ -107,7 +107,7 @@ TEST(SampleTest3, Sample1)
 }
 
 // * 테스트 커버리지
-// : 테스트 코드에 의해서 실해되는 제품 코드의 비율
+// : 테스트 코드에 의해서 실행 제품 코드의 비율
 void OpenFile(const std::string& filename)
 {
     if (filename.empty()) {
