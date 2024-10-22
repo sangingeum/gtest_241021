@@ -54,3 +54,15 @@ public:
 // C++ Mock Framework
 //  => Google Mock Framework 입니다.
 //  => Google Test 1.8 이후로, Google Mock 프로젝트가 흡수되었습니다.
+
+#include <gmock/gmock.h>
+// 위의 헤더를 통해 gtest/gtest.h도 포함되기 때문에, 별도로 포함할 필요가 없습니다.
+
+class MockDLoggerTarget : public DLoggerTarget {
+public:
+    // virtual void Write(Level level, const std::string& message)
+    // Mocking => MOCK_METHOD 매크로를 이용하면 됩니다.
+
+    // MOCK_METHOD{인자개수}(메소드 이름, 메소드 타입)
+    MOCK_METHOD2(Write, void(Level level, const std::string& message));
+};
