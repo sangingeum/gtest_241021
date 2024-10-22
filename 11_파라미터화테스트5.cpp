@@ -16,6 +16,7 @@ std::vector<std::string> cars = {
 
 // 구글 테스트의 파라미터화 테스트는 두 개 이상의 데이터 셋을 조합해서
 // 파라미터화 테스트를 수행할 수 있습니다.
+// => testing::Combine
 // => tuple
 
 using CarType = std::tuple<std::string, Color, int>;
