@@ -26,7 +26,10 @@ public:
 // 자식 클래스는 부모 클래스의 protected를 public으로 변경할 수 있습니다.
 class TestUser : public User {
 public:
-    int GetAge() const { return User::GetAge(); }
+    // int GetAge() const { return User::GetAge(); }
+
+    using User::GetAge;
+    // 부모가 제공하는 protected를 public으로 변경하는 문법입니다.
 };
 
 TEST(UserTest, foo)
