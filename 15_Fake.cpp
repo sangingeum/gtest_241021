@@ -53,6 +53,9 @@ public:
 // Fake Object Pattern
 // 의도: 아직 준비되지 않은 협력 객체로 인해서, 테스트 되지 않은 요구사항이 존재합니다.
 // 방법: 동일한 기능을 제공하는 가벼운 테스트 대역을 만들어서, 테스트 되지 않은 요구사항을 검증합니다.
+//   1) 협력 객체가 준비되지 않았을 때
+//   2) 협력 객체가 사용하기 어려울 때
+//   3) 협력 객체가 너무 느려서, 느린 테스트의 문제가 발생할 때
 
 class FakeDatabase : public IDatabase {
     std::map<std::string, User*> data;
@@ -69,6 +72,20 @@ public:
     }
 };
 
+// * 사용자 정의 타입에 대해서, 단언문을 사용할 경우, 단언문이 사용하는 연산자에 대한 재정의가 반드시 필요합니다.
+bool operator==(const User& lhs, const User& rhs)
+{
+    return false;
+    // return lhs.GetName() == rhs.GetName() && lhs.GetAge() == rhs.GetAge();
+}
+
+// * 사용자 정의 타입에 대해서, 구글 테스트에서 제대로 출력되기 위해서는
+//   연산자 재정의 함수가 필요합니다.
+std::ostream& operator<<(std::ostream& os, const User& user)
+{
+    return os << "{ " << user.GetName() << ", " << user.GetAge() << "}";
+}
+
 TEST(RepositoryTest, Save)
 {
     FakeDatabase database;
@@ -80,5 +97,5 @@ TEST(RepositoryTest, Save)
     repo.Save(&expected);
     User* actual = repo.Load(test_name);
 
-    EXPECT_EQ(expected, *actual);
+    EXPECT_EQ(expected, *actual); // ==
 }
