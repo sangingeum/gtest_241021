@@ -32,7 +32,7 @@ INSTANTIATE_TEST_SUITE_P(SampleValues, SampleTest,
 //           |              |
 //            --------------
 //            |
-//  testing::TestWithParam
+//    SampleTest: testing::TestWithParam
 //            |
 //     ----------------------------
 //     |                          |
