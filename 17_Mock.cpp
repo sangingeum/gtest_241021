@@ -69,13 +69,17 @@ public:
 
 TEST(DLoggerTest, Write)
 {
+    // Arrange
     DLogger logger;
     MockDLoggerTarget t1, t2;
     logger.AddTarget(&t1);
     logger.AddTarget(&t2);
 
-    logger.Write(INFO, "test_message");
-
+    // 주의사항: 동작을 수행하기 전에, 먼저 EXPECT_CALL을 해야 합니다.
+    // Assert
     EXPECT_CALL(t1, Write(INFO, "test_message"));
     EXPECT_CALL(t2, Write(INFO, "test_message"));
+
+    // Act
+    logger.Write(INFO, "test_message");
 }

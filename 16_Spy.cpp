@@ -72,13 +72,16 @@ public:
 
 TEST(DLoggerTarget, Write)
 {
+    // Arrange
     DLogger logger;
     SpyTarget t1, t2;
     logger.AddTarget(&t1);
     logger.AddTarget(&t2);
 
+    // Act
     logger.Write(INFO, "test_message");
 
+    // Assert
     EXPECT_TRUE(t1.IsReceived(INFO, "test_message"));
     EXPECT_TRUE(t2.IsReceived(INFO, "test_message"));
 }
