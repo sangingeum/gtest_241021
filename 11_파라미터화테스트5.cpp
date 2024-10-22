@@ -9,6 +9,7 @@ enum Color {
 };
 
 int years[] = { 2022, 2023, 2024 };
+// 2010 - 2024
 
 std::vector<std::string> cars = {
     "Avante", "Sonata", "Genesis"
@@ -27,7 +28,8 @@ INSTANTIATE_TEST_SUITE_P(CarValues, CarTest,
     testing::Combine(
         testing::ValuesIn(cars),
         testing::Values(Color::RED, Color::WHITE, Color::BLUE, Color::BLACK),
-        testing::ValuesIn(years)));
+        // testing::ValuesIn(years)));
+        testing::Range(2010, 2025, 5)));
 
 TEST_P(CarTest, Sample)
 {
@@ -39,3 +41,21 @@ TEST_P(CarTest, Sample)
 
     std::cout << model << ", " << color << ", " << year << std::endl;
 }
+
+// * 파라미터화 테스트에서 데이터셋을 정의하는 함수
+// 1) testing::Values(1, 2, 3, 4)
+
+// 2) testing::ValuesIn(data);
+//    int data[] = { 1, 2, 3, 4 };
+
+//    testing::ValuesIn(GetData());
+//    std::vector<std::string> GetData() {}
+
+// 3) testing::Range(start, end)
+//    - [start, end)
+//    testing::Range(start, end, step)
+
+// 4) testing::Combine(
+//        testing::Values(10, 20, 30),
+//        testing::ValuesIn(data)
+//    )
