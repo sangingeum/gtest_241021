@@ -7,8 +7,19 @@ class User {
     int age = 42;
     int GetAge() const { return age; }
 
+    void loginToServer() { }
+    void deleteUser() { }
+    void process3() { }
+
 public:
     void foo() { age = 100; }
+
+    void goo()
+    {
+        loginToServer();
+        deleteUser();
+        process3();
+    }
 
     FRIEND_TEST(UserTest, foo);
 };
