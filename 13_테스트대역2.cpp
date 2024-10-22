@@ -104,5 +104,10 @@ TEST(LoggerTest, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
         << "확장자를 제외한 파일명이 5글자 미만일 때";
 }
 
-// * 테스트 코드에서 전달되는 인자나 변수명을 지을 때, 테스트의 의도가 표현될 수 있도록 만드는 것은
-//   테스트 코드의 가독성에 도움이 됩니다.
+// * 테스트 대역
+// : xUnit Test Pattern
+// => 4가지 종류
+// 1) Test Stub
+// 2) Fake Object
+// 3) Test Spy
+// 4) Mock Object
