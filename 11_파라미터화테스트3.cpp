@@ -2,6 +2,8 @@
 
 bool IsPrime(int value)
 {
+    return false;
+
     for (int i = 2; i < value; ++i) {
         if (value % i == 0) {
             return false;
@@ -49,10 +51,18 @@ TEST_P(PrimeTest, IsPrime_Bad)
 
 // 2) 사용자 정의 타입 - struct
 
+#if 1
 struct InputType {
     int good;
     int bad;
 };
+
+// => 구글 테스트에서 사용자 정의 타입이 표현될 때,
+//    원하는 형태로 표현될 수 있도록 연산자 재정의 함수가 필요합니다.
+std::ostream& operator<<(std::ostream& os, const InputType& data)
+{
+    return os << "{" << data.good << ", " << data.bad << "}";
+}
 
 class PrimeTest : public testing::TestWithParam<InputType> { };
 
@@ -79,3 +89,4 @@ TEST_P(PrimeTest, IsPrime_Bad)
 
     EXPECT_FALSE(IsPrime(data.bad));
 }
+#endif
