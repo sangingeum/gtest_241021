@@ -69,6 +69,7 @@ public:
     User* LoadUser(const std::string& name) override
     {
         return data[name];
+        // return nullptr;
     }
 };
 
@@ -97,5 +98,6 @@ TEST(RepositoryTest, Save)
     repo.Save(&expected);
     User* actual = repo.Load(test_name);
 
+    ASSERT_NE(actual, nullptr);
     EXPECT_EQ(expected, *actual); // ==
 }
