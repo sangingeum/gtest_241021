@@ -63,8 +63,18 @@ public:
     // virtual void Write(Level level, const std::string& message)
     // Mocking => MOCK_METHOD 매크로를 이용하면 됩니다.
 
+    // * 1.10 이전
     // MOCK_METHOD{인자개수}(메소드 이름, 메소드 타입)
-    MOCK_METHOD2(Write, void(Level level, const std::string& message));
+    // MOCK_CONST_METHOD{인자개수}
+    // MOCK_METHOD2(Write, void(Level level, const std::string& message));
+
+    // * 1.10 이후
+    // => Mocking 방법이 변경되었습니다.
+    //  : MOCK_METHOD 하나로 통일되었습니다.
+    // MOCK_METHOD(반환타입, 메소드이름, (인자정보), (한정자정보));
+
+    // void Write(Level level, const std::string& message) override
+    MOCK_METHOD(void, Write, (Level level, const std::string& message), (override));
 };
 
 TEST(DLoggerTest, Write)
