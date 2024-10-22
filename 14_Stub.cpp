@@ -55,6 +55,37 @@ public:
 // 방법: 실제 의존하는 객체를 테스트 대역으로 교체해서,
 //      SUT가 테스트하는데 필요한 결과를 보내도록 '제어' 합니다.
 
+class StubTime : public Time {
+    std::string result;
+
+public:
+    StubTime(const std::string& r)
+        : result { r }
+    {
+    }
+
+    std::string GetCurrentTime() const override
+    {
+        return result;
+    }
+};
+
+TEST(SchedulerTest, Alarm_00_00)
+{
+    StubTime clock { "00:00" };
+    Scheduler sc { &clock };
+
+    EXPECT_EQ(sc.Alarm(), 42) << "00:00 일 때";
+}
+
+TEST(SchedulerTest, Alarm_10_00)
+{
+    StubTime clock { "10:00" };
+    Scheduler sc { &clock };
+
+    EXPECT_EQ(sc.Alarm(), 100) << "10:00 일 때";
+}
+
 #if 0
 int main()
 {
