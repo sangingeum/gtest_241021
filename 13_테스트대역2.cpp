@@ -104,7 +104,7 @@ TEST(LoggerTest, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
         << "확장자를 제외한 파일명이 5글자 미만일 때";
 }
 
-// * 테스트 대역
+// * 테스트 대역(Test Double)
 // : xUnit Test Pattern
 // => 4가지 종류
 // 1) Test Stub
