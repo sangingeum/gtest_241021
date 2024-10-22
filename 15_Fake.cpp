@@ -56,6 +56,7 @@ public:
 //   1) 협력 객체가 준비되지 않았을 때
 //   2) 협력 객체가 사용하기 어려울 때
 //   3) 협력 객체가 너무 느려서, 느린 테스트의 문제가 발생할 때
+//  * Fake Object를 만드는 비용을 고려해야 합니다.
 
 class FakeDatabase : public IDatabase {
     std::map<std::string, User*> data;
