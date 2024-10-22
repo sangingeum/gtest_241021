@@ -66,3 +66,16 @@ public:
     // MOCK_METHOD{인자개수}(메소드 이름, 메소드 타입)
     MOCK_METHOD2(Write, void(Level level, const std::string& message));
 };
+
+TEST(DLoggerTest, Write)
+{
+    DLogger logger;
+    MockDLoggerTarget t1, t2;
+    logger.AddTarget(&t1);
+    logger.AddTarget(&t2);
+
+    logger.Write(INFO, "test_message");
+
+    EXPECT_CALL(t1, Write(INFO, "test_message"));
+    EXPECT_CALL(t2, Write(INFO, "test_message"));
+}
