@@ -10,6 +10,12 @@
 //                -fsanitize=thread
 //                -fsanitize=undefined
 
+struct AAA {
+    int a;
+    int b;
+    int c;
+};
+
 class Image {
     std::string url;
 
@@ -28,9 +34,8 @@ public:
 bool DrawImage(const std::string& url)
 {
     Image* p = new Image { url };
-    Image* p2 = new Image { url };
+    // Image* p2 = new Image { url };
     p->Draw();
-
     delete p;
 
     return true;

@@ -25,12 +25,21 @@ public:
         return malloc(size);
     }
 
+    void operator delete(void* p, size_t)
     {
         free(p);
         --allocCount;
     }
 #endif
 };
+
+// new
+// 1) 메모리 할당 => operator new
+// 2) 생성자 호출
+
+// delete
+// 1) 소멸자 호출
+// 2) 메모리 해지 => operator delete
 
 #ifdef GTEST_LEAK_TEST
 int Image::allocCount = 0;
