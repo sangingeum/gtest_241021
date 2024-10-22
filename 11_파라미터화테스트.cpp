@@ -5,7 +5,6 @@
 bool IsValidEmail(const std::string& email)
 {
     const std::regex pattern { R"((\w+)(\.|\_)?(\w*)@(\w+)(\.(\w+))+)" };
-    // return false;
     return std::regex_match(email, pattern);
 }
 
