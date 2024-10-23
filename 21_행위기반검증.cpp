@@ -94,3 +94,33 @@ TEST(PersonTest, Sample1)
 
     UsePerson2(&mock);
 }
+
+// 3) 함수 호출 인자
+// => Matcher
+using testing::Matcher;
+
+using testing::Ge; // >=
+using testing::Gt; // >
+using testing::Le; // <=
+using testing::Lt; // <
+
+void UsePerson3(Person* p)
+{
+    p->Go(5, 10);
+    p->Go(15, 24);
+    p->Go(10, 25); // !!
+}
+
+TEST(PersonTest3, Sample)
+{
+    MockPerson mock;
+
+    // EXPECT_CALL(mock, Go(10, 20)).Times(3);
+    // 첫번째 인자: 5 이상
+    // 두번째 인자: 25 미만
+    Matcher<int> arg1 = Ge(5);
+    Matcher<int> arg2 = Lt(25);
+    EXPECT_CALL(mock, Go(arg1, arg2)).Times(3);
+
+    UsePerson3(&mock);
+}
