@@ -19,7 +19,9 @@ public:
 
 using testing::Lt;
 using testing::StartsWith;
+using testing::StrCaseEq;
 
+// https://google.github.io/googletest/reference/matchers.html
 TEST(UserTest, Sample)
 {
     User user;
@@ -27,6 +29,7 @@ TEST(UserTest, Sample)
     // ...
     EXPECT_EQ(user.GetName(), "Tom") << "실패!";
     EXPECT_THAT(user.GetName(), StartsWith("T")) << "실패!";
+    EXPECT_THAT(user.GetName(), StrCaseEq("TOM")) << "실패!";
 
     EXPECT_LT(user.GetAge(), 100);
     EXPECT_THAT(user.GetAge(), Lt(100));
