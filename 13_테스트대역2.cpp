@@ -107,6 +107,8 @@ TEST(LoggerTest, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
 //-------
 #include <gmock/gmock.h>
 
+#if 0
+
 class MockFileSystem : public IFileSystem {
 public:
     // bool IsValidFilename(const std::string& filename) override
@@ -132,6 +134,41 @@ TEST(LoggerTestGoogleMock, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
     std::string invalidFilename = "bad.log";
     NiceMock<MockFileSystem> fs;
     ON_CALL(fs, IsValidFilename(invalidFilename)).WillByDefault(Return(true));
+    Logger logger { &fs };
+
+    EXPECT_FALSE(logger.IsValidLogFilename(invalidFilename))
+        << "확장자를 제외한 파일명이 5글자 미만일 때";
+}
+#endif
+
+using testing::NiceMock;
+using testing::Return;
+
+class MockFileSystem : public IFileSystem {
+public:
+    MockFileSystem()
+    {
+        ON_CALL(*this, IsValidFilename).WillByDefault(Return(true));
+    }
+
+    // bool IsValidFilename(const std::string& filename) override
+    MOCK_METHOD(bool, IsValidFilename, (const std::string& filename), (override));
+};
+
+TEST(LoggerTestGoogleMock, IsValidLogFilename_NameLongerThan5Chars_ReturnsTrue)
+{
+    std::string validFilename = "valid.log";
+    NiceMock<MockFileSystem> fs;
+    Logger logger { &fs };
+
+    EXPECT_TRUE(logger.IsValidLogFilename(validFilename))
+        << "확장자를 제외한 파일명이 5글자 이상일 때";
+}
+
+TEST(LoggerTestGoogleMock, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
+{
+    std::string invalidFilename = "bad.log";
+    NiceMock<MockFileSystem> fs;
     Logger logger { &fs };
 
     EXPECT_FALSE(logger.IsValidLogFilename(invalidFilename))

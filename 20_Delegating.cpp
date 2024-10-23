@@ -47,11 +47,15 @@ TEST(CalcTest, Process)
     Process(&mock);
 }
 
+using testing::_;
+
 TEST(CalcTest, Process2)
 {
     NiceMock<MockCalc> mock;
     // ON_CALL(mock, Add(10, 20)).WillByDefault(Return(30));
-    ON_CALL(mock, Add).WillByDefault(Return(30));
+    ON_CALL(mock, Add(_, 20)).WillByDefault(Return(30));
+
+    // ON_CALL(mock, Add).WillByDefault(Return(30));
     // 인자와 상관없이 모든 Add의 호출의 결과를 제어합니다.
 
     std::cout << mock.Add(10, 20) << std::endl;
