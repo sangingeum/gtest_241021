@@ -106,20 +106,21 @@ void foo(Car* p)
     p->f5();
 }
 
-// f1 ---> f2
+// f1 ---> f2               ; s1
 //    |
-//    ---> f3 --> f5
+//    ---> f3 --> f5        ; s2
 //    |
-//    ---> f4
+//    ---> f4               ; s3
 TEST(CarTest, Sample)
 {
+    Sequence s1, s2, s3;
     MockCar mock;
 
-    EXPECT_CALL(mock, f1);
-    EXPECT_CALL(mock, f2);
-    EXPECT_CALL(mock, f3);
-    EXPECT_CALL(mock, f4);
-    EXPECT_CALL(mock, f5);
+    EXPECT_CALL(mock, f1).InSequence(s1, s2, s3);
+    EXPECT_CALL(mock, f2).InSequence(s1);
+    EXPECT_CALL(mock, f3).InSequence(s2);
+    EXPECT_CALL(mock, f4).InSequence(s3);
+    EXPECT_CALL(mock, f5).InSequence(s2);
 
     foo(&mock);
 }
