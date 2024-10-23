@@ -76,3 +76,50 @@ TEST(DogTest, Sample2)
 
     Process2(&mock);
 }
+
+class Car {
+public:
+    virtual ~Car() { }
+
+    virtual void f1() { }
+    virtual void f2() { }
+    virtual void f3() { }
+    virtual void f4() { }
+    virtual void f5() { }
+};
+
+class MockCar : public Car {
+public:
+    MOCK_METHOD(void, f1, (), (override));
+    MOCK_METHOD(void, f2, (), (override));
+    MOCK_METHOD(void, f3, (), (override));
+    MOCK_METHOD(void, f4, (), (override));
+    MOCK_METHOD(void, f5, (), (override));
+};
+
+void foo(Car* p)
+{
+    p->f1();
+    p->f2();
+    p->f3();
+    p->f4();
+    p->f5();
+}
+
+// f1 ---> f2
+//    |
+//    ---> f3 --> f5
+//    |
+//    ---> f4
+TEST(CarTest, Sample)
+{
+    MockCar mock;
+
+    EXPECT_CALL(mock, f1);
+    EXPECT_CALL(mock, f2);
+    EXPECT_CALL(mock, f3);
+    EXPECT_CALL(mock, f4);
+    EXPECT_CALL(mock, f5);
+
+    foo(&mock);
+}
