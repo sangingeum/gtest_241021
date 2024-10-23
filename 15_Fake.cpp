@@ -58,6 +58,20 @@ public:
 //   3) 협력 객체가 너무 느려서, 느린 테스트의 문제가 발생할 때
 //  * Fake Object를 만드는 비용을 고려해야 합니다.
 
+// * 사용자 정의 타입에 대해서, 단언문을 사용할 경우, 단언문이 사용하는 연산자에 대한 재정의가 반드시 필요합니다.
+bool operator==(const User& lhs, const User& rhs)
+{
+    // return false;
+    return lhs.GetName() == rhs.GetName() && lhs.GetAge() == rhs.GetAge();
+}
+
+// * 사용자 정의 타입에 대해서, 구글 테스트에서 제대로 출력되기 위해서는
+//   연산자 재정의 함수가 필요합니다.
+std::ostream& operator<<(std::ostream& os, const User& user)
+{
+    return os << "{ " << user.GetName() << ", " << user.GetAge() << "}";
+}
+
 class FakeDatabase : public IDatabase {
     std::map<std::string, User*> data;
 
@@ -74,23 +88,84 @@ public:
     }
 };
 
-// * 사용자 정의 타입에 대해서, 단언문을 사용할 경우, 단언문이 사용하는 연산자에 대한 재정의가 반드시 필요합니다.
-bool operator==(const User& lhs, const User& rhs)
-{
-    return false;
-    // return lhs.GetName() == rhs.GetName() && lhs.GetAge() == rhs.GetAge();
-}
-
-// * 사용자 정의 타입에 대해서, 구글 테스트에서 제대로 출력되기 위해서는
-//   연산자 재정의 함수가 필요합니다.
-std::ostream& operator<<(std::ostream& os, const User& user)
-{
-    return os << "{ " << user.GetName() << ", " << user.GetAge() << "}";
-}
-
 TEST(RepositoryTest, Save)
 {
     FakeDatabase database;
+    Repository repo { &database };
+    std::string test_name = "test_name";
+    int test_age = 42;
+    User expected { test_name, test_age };
+
+    repo.Save(&expected);
+    User* actual = repo.Load(test_name);
+
+    ASSERT_NE(actual, nullptr);
+    EXPECT_EQ(expected, *actual); // ==
+}
+
+#include <gmock/gmock.h>
+
+#if 0
+using testing::NiceMock;
+
+class MockDatabase : public IDatabase {
+public:
+    // void SaveUser(const std::string& name, User* user) override
+    MOCK_METHOD(void, SaveUser, (const std::string& name, User* user), (override));
+
+    // User* LoadUser(const std::string& name) override
+    MOCK_METHOD(User*, LoadUser, (const std::string& name), (override));
+};
+
+TEST(RepositoryTestGoogleMock, Save)
+{
+    NiceMock<MockDatabase> database;
+    std::map<std::string, User*> data;
+    ON_CALL(database, SaveUser).WillByDefault([&data](const std::string& name, User* user) {
+        data[name] = user;
+    });
+    ON_CALL(database, LoadUser).WillByDefault([&data](const std::string& name) {
+        return data[name];
+    });
+
+    Repository repo { &database };
+    std::string test_name = "test_name";
+    int test_age = 42;
+    User expected { test_name, test_age };
+
+    repo.Save(&expected);
+    User* actual = repo.Load(test_name);
+
+    ASSERT_NE(actual, nullptr);
+    EXPECT_EQ(expected, *actual); // ==
+}
+#endif
+
+using testing::NiceMock;
+
+class MockDatabase : public IDatabase {
+    std::map<std::string, User*> data;
+
+public:
+    MockDatabase()
+    {
+        ON_CALL(*this, SaveUser).WillByDefault([this](const std::string& name, User* user) {
+            data[name] = user;
+        });
+        ON_CALL(*this, LoadUser).WillByDefault([this](const std::string& name) {
+            return data[name];
+        });
+    }
+
+    MOCK_METHOD(void, SaveUser, (const std::string& name, User* user), (override));
+
+    MOCK_METHOD(User*, LoadUser, (const std::string& name), (override));
+};
+
+TEST(RepositoryTestGoogleMock, Save)
+{
+    NiceMock<MockDatabase> database;
+    std::map<std::string, User*> data;
     Repository repo { &database };
     std::string test_name = "test_name";
     int test_age = 42;

@@ -49,6 +49,29 @@ TEST(CalcTest, Process)
 
 using testing::_;
 
+int add(int a, int b) { return a + b; } // 함수
+
+// 함수 객체
+struct Adder {
+    int operator()(int a, int b) const { return a + b; }
+};
+
+TEST(CalcTest, Process3)
+{
+    NiceMock<MockCalc> mock;
+
+    // ON_CALL(mock, Add).WillByDefault(&add); // 함수
+    // ON_CALL(mock, Add).WillByDefault(Adder {}); // 함수 객체
+    ON_CALL(mock, Add).WillByDefault([](int a, int b) {
+        return a + b;
+    }); // 람다 표현식
+
+    std::cout << mock.Add(10, 20) << std::endl;
+    std::cout << mock.Add(10, 20) << std::endl;
+    std::cout << mock.Add(100, 20) << std::endl;
+    std::cout << mock.Add(100, 20) << std::endl;
+}
+
 TEST(CalcTest, Process2)
 {
     NiceMock<MockCalc> mock;
