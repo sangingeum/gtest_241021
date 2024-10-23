@@ -39,6 +39,19 @@ TEST(CalcTest, Process)
 {
     NiceMock<MockCalc> mock;
     ON_CALL(mock, Add(10, 20)).WillByDefault(Return(30));
+    ON_CALL(mock, Sub(100, 50)).WillByDefault(Return(50));
+
+    EXPECT_CALL(mock, Add(10, 20));
+    EXPECT_CALL(mock, Sub(100, 50));
+
+    Process(&mock);
+}
+
+#if 0
+TEST(CalcTest, Process)
+{
+    NiceMock<MockCalc> mock;
+    ON_CALL(mock, Add(10, 20)).WillByDefault(Return(30));
 
     // EXPECT_CALL(mock, Add(10, 20));
     // EXPECT_CALL(mock, Sub(100, 50));
@@ -49,3 +62,4 @@ TEST(CalcTest, Process)
 
     // Process(&mock);
 }
+#endif
