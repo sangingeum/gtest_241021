@@ -36,6 +36,11 @@ Uninteresting mock function call - returning default value.
 // 2) NiceMock
 // => 경고도 발생하지 않습니다.
 
+// 3) StrictMock
+// => EXPECT_CALL 되지 않은 메소드가 호출되면, 테스트는 실패합니다.
+// => 주의해야 합니다.
+//    : 테스트의 통과 기준이 높아져서, 테스트를 작성하는 비용이 증가할 수 있습니다.
+
 class MockCar : public Car {
 public:
     MOCK_METHOD(void, Go, (), (override));
@@ -43,12 +48,14 @@ public:
 };
 
 using testing::NiceMock;
+using testing::StrictMock;
 
 // Process에 Car 객체를 전달하였을 때, Go가 호출되는지 여부를 검증하고 싶습니다.
 TEST(CarTest, Process)
 {
     // MockCar mock;
-    NiceMock<MockCar> mock;
+    // NiceMock<MockCar> mock;
+    StrictMock<MockCar> mock;
 
     EXPECT_CALL(mock, Go());
     // EXPECT_CALL(mock, GetName());
