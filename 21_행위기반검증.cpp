@@ -152,3 +152,26 @@ TEST(PersonTest3, Sample)
 
     UsePerson3(&mock);
 }
+
+void UsePerson5(Person* p)
+{
+    p->Print({ 1, 2, 3 });
+}
+
+using testing::ElementsAre;
+using testing::ElementsAreArray;
+
+TEST(PersonTest4, Sample)
+{
+    MockPerson mock;
+
+    // [0]: 10보다 작아야 합니다. => Lt(10)
+    // [1]: 2 이상입니다. => Ge(2)
+    // [2]: 5 이하입니다. => Le(5)
+    // EXPECT_CALL(mock, Print(ElementsAre(Lt(10), Ge(2), Le(5))));
+
+    Matcher<int> args[] = { Lt(10), Ge(2), Le(5) };
+    EXPECT_CALL(mock, Print(ElementsAreArray(args)));
+
+    UsePerson5(&mock);
+}
