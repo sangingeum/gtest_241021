@@ -36,8 +36,8 @@ TEST(SampleTest, Sample)
 {
     MockCalc mock;
 
+    EXPECT_CALL(mock, Add(42, Element {})); // 행위 기반 검증!
+
     mock.Add(Element {});
     mock.Add(42, Element {});
-
-    EXPECT_CALL(mock, Add(42, Element {})); // 행위 기반 검증!
 }
