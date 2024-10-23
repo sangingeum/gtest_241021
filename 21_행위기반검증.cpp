@@ -28,17 +28,32 @@ public:
 
 void UsePerson(Person* p)
 {
-    p->Go(10, 20);
+    // p->Go(100, 20);
 }
 
 // EXPECT_CALL
+// 1) EXPECT_CALL을 Act 이전에 작성해야 합니다.
+// 2) EXPECT_CALL은 별도로 메세지를 작성할 수 있는 기능을 제공하고 있지 않습니다.
+// 3) mock 객체가 파괴될 때, 검증이 수행됩니다.
 
 // 1) 함수 호출 여부
 TEST(PersonTest, Sample)
 {
     MockPerson mock;
 
-    EXPECT_CALL(mock, Go(10, 20));
+    // EXPECT_CALL(mock, Go(10, 20));
+    EXPECT_CALL(mock, Go); // 인자와 상관없이 호출 여부를 판단합니다.
 
     UsePerson(&mock);
+}
+
+TEST(PersonTest, Sample2)
+{
+    MockPerson* mock = new MockPerson;
+
+    EXPECT_CALL(*mock, Go);
+
+    UsePerson(mock);
+
+    delete mock;
 }
