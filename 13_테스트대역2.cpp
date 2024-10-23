@@ -104,6 +104,40 @@ TEST(LoggerTest, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
         << "확장자를 제외한 파일명이 5글자 미만일 때";
 }
 
+//-------
+#include <gmock/gmock.h>
+
+class MockFileSystem : public IFileSystem {
+public:
+    // bool IsValidFilename(const std::string& filename) override
+    MOCK_METHOD(bool, IsValidFilename, (const std::string& filename), (override));
+};
+
+using testing::NiceMock;
+using testing::Return;
+
+TEST(LoggerTestGoogleMock, IsValidLogFilename_NameLongerThan5Chars_ReturnsTrue)
+{
+    std::string validFilename = "valid.log";
+    NiceMock<MockFileSystem> fs;
+    ON_CALL(fs, IsValidFilename(validFilename)).WillByDefault(Return(true));
+    Logger logger { &fs };
+
+    EXPECT_TRUE(logger.IsValidLogFilename(validFilename))
+        << "확장자를 제외한 파일명이 5글자 이상일 때";
+}
+
+TEST(LoggerTestGoogleMock, IsValidLogFilename_ShorterThan5Chars_ReturnsFalse)
+{
+    std::string invalidFilename = "bad.log";
+    NiceMock<MockFileSystem> fs;
+    ON_CALL(fs, IsValidFilename(invalidFilename)).WillByDefault(Return(true));
+    Logger logger { &fs };
+
+    EXPECT_FALSE(logger.IsValidLogFilename(invalidFilename))
+        << "확장자를 제외한 파일명이 5글자 미만일 때";
+}
+
 // * 테스트 대역(Test Double)
 // : xUnit Test Pattern
 // => 4가지 종류
