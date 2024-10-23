@@ -23,18 +23,27 @@ void Process(Dog* p)
 {
     p->First();
     p->Second();
-    p->Third();
+
     p->Fourth();
+    p->Third();
 }
+
+// 4. 호출 순서
+//  : First -> Second -> Third -> Fourth
+
+// => testing::InSequence 객체
+using testing::InSequence;
 
 TEST(DogTest, Sample1)
 {
+    InSequence seq; // 해당 객체가 존재하면, 순서를 검증합니다.
     MockDog mock;
 
     EXPECT_CALL(mock, First());
     EXPECT_CALL(mock, Second());
-    EXPECT_CALL(mock, Third());
+
     EXPECT_CALL(mock, Fourth());
+    EXPECT_CALL(mock, Third());
 
     Process(&mock);
 }
