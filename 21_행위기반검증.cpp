@@ -67,6 +67,7 @@ TEST(PersonTest, Sample2)
 // 2) AtMost(N)  => N번 이하
 // 3) Between(A, B) => A번 이상 B번 이하
 
+using testing::_;
 using testing::AtLeast;
 using testing::AtMost;
 using testing::Between;
@@ -74,8 +75,8 @@ using testing::Between;
 void UsePerson2(Person* p)
 {
     p->Go(10, 20);
-    // p->Go(10, 20);
-    // p->Go(10, 20);
+    p->Go(10, 30);
+    p->Go(10, 40);
 }
 
 TEST(PersonTest, Sample1)
@@ -85,7 +86,11 @@ TEST(PersonTest, Sample1)
     // EXPECT_CALL(mock, Go(10, 20)); // 1번 호출
     // EXPECT_CALL(mock, Go(10, 20)).Times(3);
 
-    EXPECT_CALL(mock, Go(10, 20)).Times(AtLeast(2));
+    // EXPECT_CALL(mock, Go(10, _)).Times(AtLeast(2));
+
+    EXPECT_CALL(mock, Go(10, 20));
+    EXPECT_CALL(mock, Go(10, 30));
+    EXPECT_CALL(mock, Go(10, 40));
 
     UsePerson2(&mock);
 }
