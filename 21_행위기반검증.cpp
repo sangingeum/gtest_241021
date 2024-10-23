@@ -181,7 +181,7 @@ using testing::UnorderedElementsAreArray;
 
 void UsePerson6(Person* p)
 {
-    p->Print({ 2, 10, -1 });
+    p->Print({ 2, 10, 1 });
 }
 
 TEST(PersonTest4, Sample2)
@@ -192,4 +192,27 @@ TEST(PersonTest4, Sample2)
     EXPECT_CALL(mock, Print(UnorderedElementsAreArray(args)));
 
     UsePerson6(&mock);
+}
+
+void UsePerson7(Person* p)
+{
+    p->SetAddress("Seoul");
+}
+
+using testing::ContainsRegex;
+using testing::HasSubstr;
+using testing::StartsWith;
+using testing::StrCaseEq;
+
+TEST(PersonTest5, Sample)
+{
+    MockPerson mock;
+
+    // EXPECT_CALL(mock, SetAddress("Seoul"));
+    // EXPECT_CALL(mock, SetAddress(StartsWith("Se")));
+    // EXPECT_CALL(mock, SetAddress(StrCaseEq("SEOUL")));
+    // EXPECT_CALL(mock, SetAddress(HasSubstr("ou")));
+    EXPECT_CALL(mock, SetAddress(ContainsRegex("Seoul")));
+
+    UsePerson7(&mock);
 }
