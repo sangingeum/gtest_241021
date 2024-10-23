@@ -49,8 +49,10 @@ TEST(DogTest, Sample1)
 void Process2(Dog* p)
 {
     p->First();
-    p->Second();
+
     p->Third();
+    p->Second();
+
     p->Fourth();
 }
 
@@ -72,5 +74,5 @@ TEST(DogTest, Sample2)
     EXPECT_CALL(mock, Third()).InSequence(s2);
     EXPECT_CALL(mock, Fourth()).InSequence(s1);
 
-    Process(&mock);
+    Process2(&mock);
 }
