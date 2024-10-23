@@ -47,6 +47,8 @@ public:
     MOCK_METHOD(const Packet*, GetPacket, (size_t packetNumber), (const, override));
 };
 
+// 의존성 주입
+// => 제품 코드가 사용하는 방식 그래도, 테스트 대역을 통해 검증을 수행할 수 있습니다.
 TEST(PacketReaderTest, ReadPacket)
 {
     MockPacketStream stream;
