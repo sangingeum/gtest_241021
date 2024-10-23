@@ -112,7 +112,7 @@ using testing::Ne; // !=
 using testing::AllOf; // &&
 using testing::AnyOf; // ||
 
-void UsePerson3(Person* p)
+void UsePerson4(Person* p)
 {
     p->Go(5, 10);
     p->Go(15, 24);
@@ -129,7 +129,14 @@ TEST(PersonTest3, Sample2)
     Matcher<int> arg2 = Lt(25); // ?
     EXPECT_CALL(mock, Go(arg1, arg2)).Times(3);
 
-    UsePerson3(&mock);
+    UsePerson4(&mock);
+}
+
+void UsePerson3(Person* p)
+{
+    p->Go(5, 10);
+    p->Go(15, 24);
+    p->Go(10, 25); // !!
 }
 
 TEST(PersonTest3, Sample)
