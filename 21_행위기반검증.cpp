@@ -99,16 +99,37 @@ TEST(PersonTest, Sample1)
 // => Matcher
 using testing::Matcher;
 
+using testing::_; // Wildcard
+
 using testing::Ge; // >=
 using testing::Gt; // >
 using testing::Le; // <=
 using testing::Lt; // <
+
+using testing::Eq; // ==
+using testing::Ne; // !=
+
+using testing::AllOf; // &&
+using testing::AnyOf; // ||
 
 void UsePerson3(Person* p)
 {
     p->Go(5, 10);
     p->Go(15, 24);
     p->Go(10, 25); // !!
+}
+
+TEST(PersonTest3, Sample2)
+{
+    MockPerson mock;
+
+    // 첫번째 인자: 5이상이고, 20미만입니다.
+    // 두번째 인자: 0 미만이거나, 10을 초과합니다.
+    Matcher<int> arg1 = Ge(5); // ?
+    Matcher<int> arg2 = Lt(25); // ?
+    EXPECT_CALL(mock, Go(arg1, arg2)).Times(3);
+
+    UsePerson3(&mock);
 }
 
 TEST(PersonTest3, Sample)
