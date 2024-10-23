@@ -2,9 +2,17 @@
 // - 정의: SUT 내부에서 협력 객체를 대상으로 함수의 호출을 통해
 //        정상 동작 여부를 검증합니다.
 //   1) 함수 호출 여부
+//        : EXPECT_CALL(...)
 //   2) 함수 호출 횟수
+//        : EXPECT_CALL(...).Times(N)
+//        : EXPECT_CALL(...).Times(Cardinality)
+//                           AtLeast / AtMost / Between
 //   3) 함수 호출 인자
+//        : Matcher
 //   4) 함수 호출 순서
+//        - InSequence seq;
+//        - Sequence s1;
+//          EXPECT_CALL(...).InSequence(s1);
 #include <string>
 #include <vector>
 
