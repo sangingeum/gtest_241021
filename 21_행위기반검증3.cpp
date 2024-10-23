@@ -45,15 +45,40 @@ TEST(CalcTest, Process)
     Process(&mock);
 }
 
-//
+// * 중요: EXPECT_CALL().WillOnce/WillRepeatedly를 사용하면, Times에 영향을 줍니다.
+//  -  WillOnce: N
+//  -  WillRepeatedly: AtLeast
+
+// - EXPECT_CALL(...)
+// => EXPECT_CALL(...).Times(1)
+
+// - EXPECT_CALL(...).WillOnce();
+// => EXPECT_CALL(...).Times(1);
+
+// - EXPECT_CALL(...).WillOnce().WillOnce();
+// => EXPECT_CALL(...).Times(2)
+
+// - EXPECT_CALL(...).WillOnce().WillOnce().WillOnce();
+// => EXPECT_CALL(...).Times(3);
+
+// - EXPECT_CALL(...).WillRepeatedly();
+// => EXPECT_CALL(...).Times(AtLeast(0));
+
+// - EXPECT_CALL(...).WillOnce().WillRepeatedly();
+// => EXPECT_CALL(...).Times(AtLeast(1));
+
+// - EXPECT_CALL(...).WillOnce().WillOnce().WillOnce().WillRepeatedly();
+// => EXPECT_CALL(...).Times(AtLeast(3));
+
 TEST(CalcTest, Process2)
 {
     MockCalc mock;
 
     EXPECT_CALL(mock, Add(10, 20))
-        .WillOnce(Return(30))
         .WillOnce(Return(100))
-        .WillRepeatedly(Return(1000));
+        .WillOnce(Return(100))
+        .WillOnce(Return(100))
+        .WillRepeatedly(Return(30));
 
     std::cout << mock.Add(10, 20) << std::endl;
     std::cout << mock.Add(10, 20) << std::endl;
