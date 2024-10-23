@@ -45,6 +45,11 @@ public:
 
     // 해결 방법 2. 괄호
     MOCK_METHOD((std::pair<bool, int>), GetPair, (), (const, override));
+
+    // bool CheckMap(std::map<std::string, int> a, bool b) const override
+    // using MapType = std::map<std::string, int>;
+    // MOCK_METHOD(bool, CheckMap, (MapType a, bool b), (const, override));
+    MOCK_METHOD(bool, CheckMap, ((std::map<std::string, int> a), bool b), (const, override));
 };
 
 TEST(SampleTest, Sample)
