@@ -23,9 +23,8 @@ void Process(Dog* p)
 {
     p->First();
     p->Second();
-
-    p->Fourth();
     p->Third();
+    p->Fourth();
 }
 
 // 4. 호출 순서
@@ -41,9 +40,37 @@ TEST(DogTest, Sample1)
 
     EXPECT_CALL(mock, First());
     EXPECT_CALL(mock, Second());
-
-    EXPECT_CALL(mock, Fourth());
     EXPECT_CALL(mock, Third());
+    EXPECT_CALL(mock, Fourth());
+
+    Process(&mock);
+}
+
+void Process2(Dog* p)
+{
+    p->First();
+    p->Second();
+    p->Third();
+    p->Fourth();
+}
+
+// First ---> Second -> Fourth   ; s1
+//       |
+//       ---> Third              ; s2
+// => testing::Sequence
+//    EXPECT_CALL(..).InSequence(..)
+
+using testing::Sequence;
+
+TEST(DogTest, Sample2)
+{
+    Sequence s1, s2;
+    MockDog mock;
+
+    EXPECT_CALL(mock, First()).InSequence(s1, s2);
+    EXPECT_CALL(mock, Second()).InSequence(s1);
+    EXPECT_CALL(mock, Third()).InSequence(s2);
+    EXPECT_CALL(mock, Fourth()).InSequence(s1);
 
     Process(&mock);
 }
