@@ -28,7 +28,7 @@ public:
 
 void UsePerson(Person* p)
 {
-    // p->Go(100, 20);
+    p->Go(100, 20);
 }
 
 // EXPECT_CALL
@@ -56,4 +56,24 @@ TEST(PersonTest, Sample2)
     UsePerson(mock);
 
     delete mock;
+}
+
+// 2) 함수 호출 횟수
+//   EXPECT_CALL(...).Times(N)
+
+void UsePerson2(Person* p)
+{
+    p->Go(10, 20);
+    p->Go(10, 20);
+    p->Go(10, 20);
+}
+
+TEST(PersonTest, Sample1)
+{
+    MockPerson mock;
+
+    // EXPECT_CALL(mock, Go(10, 20)); // 1번 호출
+    EXPECT_CALL(mock, Go(10, 20)).Times(3);
+
+    UsePerson2(&mock);
 }
