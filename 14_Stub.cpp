@@ -100,3 +100,36 @@ int main()
     std::cout << sc.Alarm() << std::endl;
 }
 #endif
+
+// 위의 예제를 Google Mock을 통해 구현해보세요.
+// - ON_CALL
+// - NiceMock
+
+#include <gmock/gmock.h>
+
+using testing::NiceMock;
+using testing::Return;
+
+class MockTime : public Time {
+public:
+    // std::string GetCurrentTime() const override
+    MOCK_METHOD(std::string, GetCurrentTime, (), (const, override));
+};
+
+TEST(SchedulerTestGoogleMock, Alarm_00_00)
+{
+    NiceMock<MockTime> clock;
+    ON_CALL(clock, GetCurrentTime).WillByDefault(Return("00:00"));
+    Scheduler sc { &clock };
+
+    EXPECT_EQ(sc.Alarm(), 42) << "00:00 일 때";
+}
+
+TEST(SchedulerTestGoogleMock, Alarm_10_00)
+{
+    NiceMock<MockTime> clock;
+    ON_CALL(clock, GetCurrentTime).WillByDefault(Return("10:00"));
+    Scheduler sc { &clock };
+
+    EXPECT_EQ(sc.Alarm(), 100) << "10:00 일 때";
+}
