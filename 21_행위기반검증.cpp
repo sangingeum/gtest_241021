@@ -181,15 +181,15 @@ using testing::UnorderedElementsAreArray;
 
 void UsePerson6(Person* p)
 {
-    p->Print({ 2, 3, 1 });
+    p->Print({ 2, 10, -1 });
 }
 
 TEST(PersonTest4, Sample2)
 {
     MockPerson mock;
 
-    Matcher<int> args[] = { Lt(10), Ge(2), Le(5) };
-    EXPECT_CALL(mock, Print(ElementsAreArray(args)));
+    Matcher<int> args[] = { Gt(0), Ge(2), Gt(5) };
+    EXPECT_CALL(mock, Print(UnorderedElementsAreArray(args)));
 
     UsePerson6(&mock);
 }
